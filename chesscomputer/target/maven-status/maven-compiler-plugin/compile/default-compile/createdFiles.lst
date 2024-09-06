@@ -1,0 +1,12 @@
+chess/ChessApp.class
+chess/BoardIterator.class
+chess/ChessComputer.class
+chess/App.class
+module-info.class
+chess/Board.class
+chess/GameControls.class
+chess/TreeNode.class
+chess/FileHandler.class
+chess/SecondaryController.class
+chess/LegalMoves.class
+chess/PrimaryController.class
