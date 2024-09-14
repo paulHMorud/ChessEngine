@@ -6,7 +6,7 @@ This is a self made chess game and engine built in Java, featuring a graphical u
 
 ## Features
 - Chess game with most of the functionality.
-- Enginge written using minmax treesearch.
+- Engine written using minmax treesearch.
 - JavaFX-based GUI.
 - Maven-based project structure for easy building and running.
 
