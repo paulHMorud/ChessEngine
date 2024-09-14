@@ -93,16 +93,7 @@ public class GameControls implements Initializable {
                     view.setImage(image);
                     }
                     catch(Exception e) {
-                        System.out.println("Problems with piece: " + c + " " + piecePic.get(c));
-                        try {
-                            String file = new java.io.File(".").getCanonicalPath();
-                            System.out.println(file);
-                        }
-                        catch(Exception a) {
-                            System.out.println("Helvete");
-                        }
-                        
-
+                        System.out.println("Problems with piece: " + c);
                     }
                 }
                 gridpane.add(view, col, row);

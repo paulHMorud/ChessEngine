@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class FileHandler {
     public ArrayList<int[]> getSaveState() {
-        String fileName = "./chesscomputer/src/main/java/chess/SaveState.txt";
+        String fileName = "./src/main/java/chess/SaveState.txt";
         ArrayList<int[]> listOfMoves = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -34,7 +34,7 @@ public class FileHandler {
     public void writeToFile(Board board) {
         String fenString = board.makeFen();
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./chesscomputer/src/main/java/chess/SaveState.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./src/main/java/chess/SaveState.txt"));
             writer.append(fenString);
             writer.append('\n');
             for (int[] move : board.getPlayedMoves()) {
