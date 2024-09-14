@@ -2,10 +2,8 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.function.Predicate;
 
 public class LegalMoves {
     public static ArrayList<int[]> legalMoves(Board board, boolean whitesTurn) {

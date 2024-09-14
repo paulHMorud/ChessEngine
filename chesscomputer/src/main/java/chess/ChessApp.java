@@ -14,7 +14,7 @@ public class ChessApp extends Application {
     public void start(Stage primaryStage) {
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("Testing.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("chess.fxml"));
         }
         catch (IOException ioe) {
             ioe.printStackTrace();

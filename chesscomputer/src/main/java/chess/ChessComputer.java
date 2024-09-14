@@ -369,7 +369,6 @@ public class ChessComputer {
 
     public int[] getBestMoveWithActivity(int depth) {
         float bestVal = getBestChildWithActivity(root, depth, -1000, 1000);
-        System.out.println("WithActivity: " + bestVal);
         for (TreeNode child : root.getChildren()) {
             if (child.getValue() == bestVal) {
                 return child.getMove();
@@ -382,11 +381,8 @@ public class ChessComputer {
 
     public int[] getBestMove(int depth) {
         float bestVal = getBestChild(root, depth, -1000, 1000);
-        //System.out.println(count);
-        System.out.println("Uten Aktivitet: " + bestVal);
         for (TreeNode child : root.getChildren()) {
             if (child.getValue() == bestVal) {
-                System.out.println(count);
                 return child.getMove();
             }
         }

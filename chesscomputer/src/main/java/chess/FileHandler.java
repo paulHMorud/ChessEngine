@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class FileHandler {
     public ArrayList<int[]> getSaveState() {
-        String fileName = "/Users/paulm/Documents/ChessGame/chesscomputer/src/main/java/Sjakk/SaveState.txt";
+        String fileName = "./src/main/java/Sjakk/SaveState.txt";
         ArrayList<int[]> listOfMoves = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));

@@ -9,7 +9,7 @@ public class BoardIterator implements Iterator<Character> {
     public BoardIterator(ArrayList<ArrayList<Character>> board) {
         this.board = board;
         this.row = 0;
-        this.col = -1;
+        this.col = -1; 
     }
 
     public boolean hasNext() {
