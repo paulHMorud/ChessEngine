@@ -1,4 +1,4 @@
-# Chess Game with Engine
+# Chess game with engine
 
 This is a self made chess game and engine built in Java, featuring a graphical user interface using JavaFX. The project is structured as a Maven build. While most aspects of chess are implemented, some functionalities are either incomplete or buggy:
 - **Draws**: Draws are not included.
