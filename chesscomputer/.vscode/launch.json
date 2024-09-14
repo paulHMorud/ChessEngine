@@ -12,9 +12,9 @@
         },
         {
             "type": "java",
-            "name": "App",
+            "name": "ChessApp",
             "request": "launch",
-            "mainClass": "chess/chess.App",
+            "mainClass": "chess/chess.ChessApp",
             "projectName": "chesscomputer"
         },
         {

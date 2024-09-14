@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import java.io.File;
 
 public class GameControls implements Initializable {
     private ArrayList<int[]> markedSquare = new ArrayList<>();
@@ -52,18 +53,18 @@ public class GameControls implements Initializable {
         board = new Board(this);
         slider();
         System.out.println(System.getProperty("user.dir"));
-        piecePic.put('k', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-king.png");
-        piecePic.put('K', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-king.png");
-        piecePic.put('p', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-pawn.png");
-        piecePic.put('P', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-pawn.png");
-        piecePic.put('n', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-knight.png");
-        piecePic.put('N', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-knight.png");
-        piecePic.put('b', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-bishop.png");
-        piecePic.put('B', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-bishop.png");
-        piecePic.put('q', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-queen.png");
-        piecePic.put('Q', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-queen.png");
-        piecePic.put('r', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/black-rook.png");
-        piecePic.put('R', "./chesscomputer/src/main/java/chess/bilde_brikker-kopi/white-rook.png");
+        piecePic.put('k', "./src/main/java/chess/bilde_brikker-kopi/black-king.png");
+        piecePic.put('K', "./src/main/java/chess/bilde_brikker-kopi/white-king.png");
+        piecePic.put('p', "./src/main/java/chess/bilde_brikker-kopi/black-pawn.png");
+        piecePic.put('P', "./src/main/java/chess/bilde_brikker-kopi/white-pawn.png");
+        piecePic.put('n', "./src/main/java/chess/bilde_brikker-kopi/black-knight.png");
+        piecePic.put('N', "./src/main/java/chess/bilde_brikker-kopi/white-knight.png");
+        piecePic.put('b', "./src/main/java/chess/bilde_brikker-kopi/black-bishop.png");
+        piecePic.put('B', "./src/main/java/chess/bilde_brikker-kopi/white-bishop.png");
+        piecePic.put('q', "./src/main/java/chess/bilde_brikker-kopi/black-queen.png");
+        piecePic.put('Q', "./src/main/java/chess/bilde_brikker-kopi/white-queen.png");
+        piecePic.put('r', "./src/main/java/chess/bilde_brikker-kopi/black-rook.png");
+        piecePic.put('R', "./src/main/java/chess/bilde_brikker-kopi/white-rook.png");
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -90,17 +91,20 @@ public class GameControls implements Initializable {
                     InputStream stream = new FileInputStream(piecePic.get(c));
                     Image image = new Image(stream); 
                     view.setImage(image);
-                    
-                    // label.setGraphic(view);
-                    // label.setPrefSize(75, 75);
-                    // label.setTextAlignment(TextAlignment.CENTER);
-                    
                     }
                     catch(Exception e) {
-                        System.out.println("Problems with piece: " + c);
+                        System.out.println("Problems with piece: " + c + " " + piecePic.get(c));
+                        try {
+                            String file = new java.io.File(".").getCanonicalPath();
+                            System.out.println(file);
+                        }
+                        catch(Exception a) {
+                            System.out.println("Helvete");
+                        }
+                        
+
                     }
                 }
-                //label.setAlignment(Pos.CENTER);
                 gridpane.add(view, col, row);
                 
             }
@@ -310,12 +314,9 @@ public class GameControls implements Initializable {
         }
         else {
             int[] move = {markedSquare.getFirst()[0], markedSquare.getFirst()[1], row, col};
-            // ChessComputer white = new ChessComputer(new Board(board));
-            // int[] move = white.getBestMoveWithActivity(4);
             if (makeMove(move)) {
                 if (playBot) {
                     ChessComputer moveGenerator = new ChessComputer(board);
-                    //int[] machineMove = moveGenerator.getBestMove((int)slider.getValue());
                     int[] machineMove = moveGenerator.getMove((int)slider.getValue());
                     makeMove(machineMove);
                 }

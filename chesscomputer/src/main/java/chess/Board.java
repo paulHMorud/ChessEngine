@@ -289,18 +289,4 @@ public class Board implements Iterable<Character> {
         return fenString.substring(0, fenString.length()-1);
         
     }
-
-    public static void main(String[] args) {
-        Board board = new Board((GameControls)null);
-        System.out.println(board.getBoard());
-        int[] move = {6, 4, 4, 4};
-        board.makeMove(move);
-        System.out.println(board.getBoard());
-        for(char c : board) {
-            if (c != ' ') {
-                System.out.println(c);
-            }
-        }
-        System.out.println(board.makeFen());
-     }
 }

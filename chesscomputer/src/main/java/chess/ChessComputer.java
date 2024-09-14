@@ -1,13 +1,10 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ChessComputer {
     private Board board;
-    private TreeNode root;
-    private int count;
     private int[] bestMove = null;
     private int setDepth;
     private static Map<Character, Integer> pieceValues = Map.of('p', 1, 'r', 5, 'q', 9, 'k', 100, 'n', 3, 'b', 3);
@@ -107,117 +104,6 @@ public class ChessComputer {
 
     public ChessComputer(Board board) {
         this.board = board;
-        this.root = new TreeNode(board, null);
-    }
-
-     
-
-    public void addChildren(TreeNode node, int depth) {
-        if (depth == -1) {
-            return;
-        }
-        Board NodeBoard = node.getBoard();
-        ArrayList<int[]> legalMoves = LegalMoves.legalMoves(NodeBoard, NodeBoard.getWhitesTurn());
-        if (depth <= 0) {
-            List<int[]> captures = legalMoves.stream().filter((int[] move) -> LegalMoves.isCapture(NodeBoard, move)).toList();
-            if (captures.size() == 0) {
-                return;
-            }
-            for (int[] capture : captures) {
-                TreeNode child = new TreeNode(new Board(NodeBoard), capture);
-                if (child.getBoard().makeMove(capture)) {
-                    node.addChild(child);
-                    addChildren(child, depth-1);
-                }
-            }
-            return;
-        }
-        for (int[] move : legalMoves) {
-            TreeNode child = new TreeNode(new Board(NodeBoard), move);
-            if (child.getBoard().makeMove(move)) {
-                node.addChild(child);
-            }
-        }
-        for (TreeNode child : node.getChildren()) {
-            addChildren(child, depth - 1);
-        }
-
-    }
-
-
-    public float getBestChild(TreeNode node, int depth, float alpha, float beta) {
-        if (depth <= 0) {
-            count ++;
-            return getStaticValue(node.getBoard());
-            //return node.getStaticValue();
-        }
-        Board NodeBoard = node.getBoard();
-        ArrayList<int[]> legalMoves = NodeBoard.getLegalMoves();
-        float high = -1000;
-        float low = 1000;
-        boolean whitesTurn = node.getBoard().getWhitesTurn();
-
-        if (depth <= 0) {
-            List<int[]> captures = legalMoves.stream().filter((int[] move) -> LegalMoves.isCapture(NodeBoard, move)).toList();
-            if (captures.size() == 0) {
-                return node.getStaticValue();
-            }
-            for (int[] capture : captures) {
-                TreeNode child = new TreeNode(new Board(NodeBoard), capture);
-                if (child.getBoard().makeMove(capture)) {
-                    node.addChild(child);
-                    float score = getBestChild(child, depth - 1, alpha, beta);
-                    if (whitesTurn && score >= alpha) {
-                        alpha = score;                    
-                    }
-                    else if (!whitesTurn && score <= beta) {
-                        beta = score;
-                    }
-                    if (score < low) {
-                        low = score;
-                    }
-                    if (score > high) {
-                        high = score;
-                    }
-                    if (beta <= alpha) {
-                        break;
-                    }
-                }
-            }
-            return node.getValue();
-        }
-
-        for (int[] move : legalMoves) {
-            TreeNode child = new TreeNode(new Board(NodeBoard), move);
-            if (child.getBoard().makeMove(move, false)) {
-                node.addChild(child);
-                float score = getBestChild(child, depth - 1, alpha, beta);
-                if (whitesTurn && score >= alpha) {
-                    alpha = score;                    
-                }
-                else if (!whitesTurn && score <= beta) {
-                    beta = score;
-                }
-                if (score < low) {
-                    low = score;
-                }
-                if (score > high) {
-                    high = score;
-                }
-                if (beta <= alpha) {
-                    break;
-                }
-                }
-            }
-        if (whitesTurn) {
-            node.setValue(high);
-            return high;
-        }
-        else {
-            node.setValue(low);
-            return low;
-        }
-
     }
 
     public float getStaticValue(Board board) {
@@ -248,7 +134,6 @@ public class ChessComputer {
 
     public float evaluateChild(Board board, int depth, float alpha, float beta) {
         if (depth <= 0) {
-            count++;
             return getStaticValue(board);
         }
 
@@ -289,113 +174,6 @@ public class ChessComputer {
         else {
             return low;
         }
-    }
-
-    public int[] getBestMoveFast(int depth) {
-        float high = -10000;
-        float low = 10000;
-        int[] bestMove = null;
-        for (int[] move : board.getLegalMoves()) {
-            Board childBoard = new Board(board);
-            if (childBoard.makeMove(move, false)) {
-                float score = evaluateChild(childBoard, depth-1, high, low);
-                if (board.getWhitesTurn() && score > high) {
-                    high = score;
-                    bestMove = move;                    
-                }
-                else if (!board.getWhitesTurn() && score < low) {
-                    low = score;
-                    bestMove = move;
-                }
-            }
-            
-        }
-        if (board.getWhitesTurn()) {
-            System.out.println("high is: " + high);
-            System.out.println("Low is: " + low);
-        }
-        else {
-            System.out.println("high is: " + high);
-            System.out.println("Low is: " + low);
-        }
-        System.out.println(count);
-        return bestMove;
-    }
-
-    public float getBestChildWithActivity(TreeNode node, int depth, float alpha, float beta) {
-        if (depth <= 0) {
-            count ++;
-            return node.getStaticValueWithActivity();
-        }
-        Board NodeBoard = node.getBoard();
-        ArrayList<int[]> legalMoves = NodeBoard.getLegalMoves();
-        float high = -1000;
-        float low = 1000;
-        boolean whitesTurn = node.getBoard().getWhitesTurn();
-
-
-        for (int[] move : legalMoves) {
-            TreeNode child = new TreeNode(new Board(NodeBoard), move);
-            if (child.getBoard().makeMove(move)) {
-                node.addChild(child);
-                float score = getBestChildWithActivity(child, depth - 1, alpha, beta);
-                if (whitesTurn && score >= alpha) {
-                    alpha = score;                    
-                }
-                else if (!whitesTurn && score <= beta) {
-                    beta = score;
-                }
-                if (score < low) {
-                    low = score;
-                }
-                if (score > high) {
-                    high = score;
-                }
-                if (beta <= alpha) {
-                    break;
-                }
-                }
-            }
-        if (whitesTurn) {
-            node.setValue(high);
-            return high;
-        }
-        else {
-            node.setValue(low);
-            return low;
-        }
-
-    }
-
-    public int[] getBestMoveWithActivity(int depth) {
-        float bestVal = getBestChildWithActivity(root, depth, -1000, 1000);
-        for (TreeNode child : root.getChildren()) {
-            if (child.getValue() == bestVal) {
-                return child.getMove();
-            }
-        }
-
-        return root.getChildren().get(0).getMove();
-    }
-
-
-    public int[] getBestMove(int depth) {
-        float bestVal = getBestChild(root, depth, -1000, 1000);
-        for (TreeNode child : root.getChildren()) {
-            if (child.getValue() == bestVal) {
-                return child.getMove();
-            }
-        }
-
-        return root.getChildren().get(0).getMove();
-        
-    }
-
-    public static void main(String[] args) {
-        Board board = new Board((GameControls)null);
-        ChessComputer compute = new ChessComputer(board);
-        int[] move = compute.getBestMove(3);
-        System.out.println("" + move[0] + move[1] + move[2] + move[3]);
     }
 
 
