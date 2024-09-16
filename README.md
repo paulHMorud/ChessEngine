@@ -23,6 +23,6 @@ mvn -version
 ## Compile and run
 ```
 git clone https://github.com/paulHMorud/ChessEngine.git
-cd chesscomputer
+cd ChessEngine/chesscomputer
 mvn clean javafx:run
 ```
