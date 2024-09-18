@@ -16,7 +16,7 @@ This is a self made chess game and engine built in Java, featuring a graphical u
 ```
 java -version
 ```
-- **Maven**: Maven is prefered to build and run the project. You can check if Maven is installed with:
+- **Maven**: Maven is preferred to run the project. You can check if Maven is installed with:
 ```
 mvn -version
 ```
